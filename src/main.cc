@@ -2,13 +2,14 @@
 #include <QtQml>
 #include <QQuickStyle>
 #include <QUrl>
-#include <QDebug>
+
+#include <fmt/core.h>
 
 #include "mime.h"
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {
-    qCritical() << "Usage:\n\t" << argv[0] << "[FILE]";
+    fmt::print(stderr, "Usage:\n\t{} FILE [ FILE... ]\n", argv[0]);
     return 1;
   }
 

@@ -10,6 +10,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5 COMPONENTS Core Widgets Quick QuickControls2 REQUIRED)
+find_package(fmt REQUIRED)
 
 add_subdirectory(src)
 
