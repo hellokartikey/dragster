@@ -1,27 +1,17 @@
 #include "mime.h"
 
-MimeTypeObject::MimeTypeObject(QString name) : name(name) {
-  mime_type = db.mimeTypeForFile(name);
+QMimeDatabase mime_db;
+
+MimeTypeObject::MimeTypeObject(const fs::path& name) : path(name) {
+  mime_type = mime_db.mimeTypeForFile( QString::fromStdString(name.native()) );
 }
 
 QString MimeTypeObject::getFileName() {
-  return name;
-}
-
-void MimeTypeObject::setFileName(QString name) {
-  this->name = name;
-  mime_type = db.mimeTypeForFile(name);
-
-  emit signalIconName();
-  emit signalFileName();
+  return QString::fromStdString( path.filename().native() );
 }
 
 QString MimeTypeObject::getIconName() {
   return mime_type.iconName();
-}
-
-void MimeTypeObject::setIconName(QString name) {
-  emit signalIconName();
 }
 
 #include "moc_mime.cpp"

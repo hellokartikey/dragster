@@ -17,6 +17,11 @@ ApplicationWindow {
 
   visible: true
 
+  Shortcut {
+    sequences: [ StandardKey.Quit ]
+    onActivated: Qt.quit()
+  }
+
   Button {
     id: dragAction
 
@@ -24,9 +29,9 @@ ApplicationWindow {
     height: parent.height
     anchors.centerIn: parent
 
-    text: mime_icon.file_name
+    text: mime.file_name
 
-    icon.name: mime_icon.icon_name
+    icon.name: mime.icon_name
     icon.height: 48
     icon.width: 48
   }
