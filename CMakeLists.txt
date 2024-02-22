@@ -9,8 +9,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt5 COMPONENTS Core Widgets Quick QuickControls2 REQUIRED)
-find_package(fmt REQUIRED)
+find_package(Qt6 COMPONENTS Core Widgets Quick QuickControls2 REQUIRED)
+include(cmake/Fetchfmt.cmake)
 
 add_subdirectory(src)
 

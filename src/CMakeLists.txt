@@ -7,9 +7,9 @@ add_executable(
 target_link_libraries(
   ${PROJECT_NAME}
   fmt::fmt
-  Qt5::Core
-  Qt5::Widgets
-  Qt5::Qml
-  Qt5::Quick
-  Qt5::QuickControls2)
+  Qt6::Core
+  Qt6::Widgets
+  Qt6::Qml
+  Qt6::Quick
+  Qt6::QuickControls2)
 

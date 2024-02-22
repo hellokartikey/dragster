@@ -1,10 +1,10 @@
 #ifndef DRAGSTER_MIME_H
 #define DRAGSTER_MIME_H
 
-#include <QObject>
-#include <QFileInfo>
 #include <QFile>
+#include <QFileInfo>
 #include <QMimeDatabase>
+#include <QObject>
 
 #include <filesystem>
 #include <string>
@@ -23,11 +23,11 @@ class MimeTypeObject : public QObject {
              NOTIFY   signalFileName);
 
 public:
-    MimeTypeObject(const fs::path& name);
+    MimeTypeObject(QObject* parent = nullptr, const fs::path& name = {});
     ~MimeTypeObject() = default;
 
-    QString getIconName();
-    QString getFileName();
+    QString getIconName() const;
+    QString getFileName() const;
 
 signals:
     void    signalIconName();

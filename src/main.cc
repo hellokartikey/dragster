@@ -31,19 +31,17 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
-  auto app = QApplication(argc, argv);
+  auto app = QGuiApplication(argc, argv);
   auto engine = QQmlApplicationEngine();
 
-  auto mime_type = MimeTypeObject(file_path);
-
+  auto mime = new MimeTypeObject(nullptr, file_path);
   engine.rootContext()->setContextProperty(
       "mime",
-      new MimeTypeObject(file_path)
+      mime
   );
 
-  engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+  const auto qml_main = QUrl(QStringLiteral("qrc:/main.qml"));
+  engine.load(qml_main);
 
   if (engine.rootObjects().isEmpty()) {
     return -1;

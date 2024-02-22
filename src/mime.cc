@@ -2,15 +2,17 @@
 
 QMimeDatabase mime_db;
 
-MimeTypeObject::MimeTypeObject(const fs::path& name) : path(name) {
+MimeTypeObject::MimeTypeObject(QObject* parent, const fs::path& name)
+    : path(name)
+    , QObject(parent) {
   mime_type = mime_db.mimeTypeForFile( QString::fromStdString(name.native()) );
 }
 
-QString MimeTypeObject::getFileName() {
+QString MimeTypeObject::getFileName() const {
   return QString::fromStdString( path.filename().native() );
 }
 
-QString MimeTypeObject::getIconName() {
+QString MimeTypeObject::getIconName() const {
   return mime_type.iconName();
 }
 
