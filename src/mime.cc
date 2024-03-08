@@ -6,23 +6,25 @@
 
 QMimeDatabase mime_db;
 
-MimeType::MimeType(QObject* parent) : QObject(parent) {}
+Mime::Mime(const fs::path& name, QObject* parent) : QObject(parent) {
+  setPath(name);
+}
 
-void MimeType::setPath(const fs::path& name) {
+auto Mime::setPath(const fs::path& name) -> void {
   path = fs::canonical(name);
 
   mime_type = mime_db.mimeTypeForFile(QString::fromStdString(path.native()));
 }
 
-QString MimeType::fileName() const {
+auto Mime::fileName() const -> QString {
   return QString::fromStdString(path.filename().native());
 }
 
-QString MimeType::iconName() const { return mime_type.iconName(); }
+auto Mime::iconName() const -> QString { return mime_type.iconName(); }
 
-QString MimeType::mimeName() const { return mime_type.name(); }
+auto Mime::mimeName() const -> QString { return mime_type.name(); }
 
-QString MimeType::fileUri() const {
+auto Mime::fileUri() const -> QString {
   return QString::fromStdString("file://" + path.native());
 }
 

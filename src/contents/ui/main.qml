@@ -13,14 +13,11 @@ ApplicationWindow {
   readonly property int buttonWidth: 256
   readonly property int buttonHeight: 64
 
-  width: buttonWidth
-  height: buttonHeight
-
   minimumWidth: buttonWidth
-  minimumHeight: buttonHeight
+  minimumHeight: buttonHeight * backend.size
 
-  maximumWidth: buttonWidth
-  maximumHeight: buttonHeight
+  maximumWidth: minimumWidth
+  maximumHeight: minimumHeight
 
   title: "Dragster"
 
@@ -48,6 +45,8 @@ ApplicationWindow {
     Drag.dragType: Drag.Automatic
     Drag.supportedActions: Qt.CopyAction
     Drag.mimeData: { "text/uri-list": backend.mime.uri }
+
+    onClicked: { console.log( backend.files ) }
 
     DragHandler {
       id: dragHandler

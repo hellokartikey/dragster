@@ -9,17 +9,24 @@ class Backend : public QObject {
  private:
   Q_OBJECT;
 
-  Q_PROPERTY(MimeType* mime READ mimeType CONSTANT);
+  Q_PROPERTY(Mime* mime READ mimeType CONSTANT);
+  Q_PROPERTY(MimeList mimes READ mimeList CONSTANT)
+
+  Q_PROPERTY(qsizetype size READ size CONSTANT);
 
  public:
   explicit Backend(int argc, char* argv[], QObject* parent = nullptr);
 
-  static Backend* inst(int argc, char* argv[]);
+  static auto inst(int argc, char* argv[]) -> Backend*;
 
-  MimeType* mimeType();
+  auto mimeType() -> Mime*;
+
+  auto mimeList() const -> MimeList;
+
+  auto size() const -> qsizetype;
 
  private:
-  MimeType m_mime_type;
+  MimeList m_mime_types;
 };
 
 #endif
