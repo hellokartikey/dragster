@@ -2,6 +2,7 @@
 
 #include <QFile>
 #include <QMimeDatabase>
+#include <QUrl>
 #include <filesystem>
 
 QMimeDatabase mime_db;
@@ -25,7 +26,8 @@ auto Mime::iconName() const -> QString { return mime_type.iconName(); }
 auto Mime::mimeName() const -> QString { return mime_type.name(); }
 
 auto Mime::fileUri() const -> QString {
-  return QString::fromStdString("file://" + path.native());
+  auto url = QUrl::fromLocalFile(QString::fromStdString(path.native()));
+  return url.toDisplayString();
 }
 
 #include "moc_mime.cpp"

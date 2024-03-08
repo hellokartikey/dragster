@@ -2,6 +2,7 @@
 #define DRAGSTER_BACKEND_H
 
 #include <QObject>
+#include <QVariant>
 
 #include "mime.h"
 
@@ -9,9 +10,7 @@ class Backend : public QObject {
  private:
   Q_OBJECT;
 
-  Q_PROPERTY(Mime* mime READ mimeType CONSTANT);
-  Q_PROPERTY(MimeList mimes READ mimeList CONSTANT)
-
+  Q_PROPERTY(QVariant mimeModel READ mimeModel CONSTANT)
   Q_PROPERTY(qsizetype size READ size CONSTANT);
 
  public:
@@ -19,14 +18,12 @@ class Backend : public QObject {
 
   static auto inst(int argc, char* argv[]) -> Backend*;
 
-  auto mimeType() -> Mime*;
-
-  auto mimeList() const -> MimeList;
+  auto mimeModel() -> QVariant;
 
   auto size() const -> qsizetype;
 
  private:
-  MimeList m_mime_types;
+  MimeList m_model;
 };
 
 #endif
