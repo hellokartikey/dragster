@@ -6,23 +6,20 @@
 #include "mime.h"
 
 class Backend : public QObject {
-private:
+ private:
   Q_OBJECT;
 
-  Q_PROPERTY(MimeType* mime
-             READ      mimeType
-             CONSTANT);
+  Q_PROPERTY(MimeType* mime READ mimeType CONSTANT);
 
-public:
-  explicit Backend(QObject* parent=nullptr);
+ public:
+  explicit Backend(int argc, char* argv[], QObject* parent = nullptr);
 
   static Backend* inst(int argc, char* argv[]);
 
   MimeType* mimeType();
 
-private:
+ private:
   MimeType m_mime_type;
 };
 
 #endif
-

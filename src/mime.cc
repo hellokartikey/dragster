@@ -1,8 +1,7 @@
 #include "mime.h"
 
-#include <QMimeDatabase>
 #include <QFile>
-
+#include <QMimeDatabase>
 #include <filesystem>
 
 QMimeDatabase mime_db;
@@ -19,17 +18,12 @@ QString MimeType::fileName() const {
   return QString::fromStdString(path.filename().native());
 }
 
-QString MimeType::iconName() const {
-  return mime_type.iconName();
-}
+QString MimeType::iconName() const { return mime_type.iconName(); }
 
-QString MimeType::mimeName() const {
-  return mime_type.name();
-}
+QString MimeType::mimeName() const { return mime_type.name(); }
 
 QString MimeType::fileUri() const {
   return QString::fromStdString("file://" + path.native());
 }
 
 #include "moc_mime.cpp"
-
