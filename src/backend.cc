@@ -25,7 +25,7 @@ auto Backend::inst(int argc, char* argv[]) -> Backend* {
   return &backend;
 }
 
-auto Backend::mimeModel() -> QVariant { return QVariant::fromValue(m_model); }
+auto Backend::mimeModel() -> MimeList { return m_model; }
 
 auto Backend::size() const -> qsizetype { return m_model.size(); }
 

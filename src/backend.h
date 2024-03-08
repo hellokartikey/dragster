@@ -10,7 +10,7 @@ class Backend : public QObject {
  private:
   Q_OBJECT;
 
-  Q_PROPERTY(QVariant mimeModel READ mimeModel CONSTANT)
+  Q_PROPERTY(MimeList mimeModel READ mimeModel CONSTANT)
   Q_PROPERTY(qsizetype size READ size CONSTANT);
 
  public:
@@ -18,7 +18,7 @@ class Backend : public QObject {
 
   static auto inst(int argc, char* argv[]) -> Backend*;
 
-  auto mimeModel() -> QVariant;
+  auto mimeModel() -> MimeList;
 
   auto size() const -> qsizetype;
 
