@@ -2,6 +2,7 @@ add_executable(
   ${PROJECT_NAME}
   main.cc
   mime.cc mime.h
+  backend.cc backend.h
   resources.qrc)
 
 target_link_libraries(

@@ -3,16 +3,25 @@ import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 
 ApplicationWindow {
+  id: root
+
   SystemPalette {
     id: myPalette
     colorGroup: SystemPalette.Active
   }
 
-  minimumWidth: 256
-  minimumHeight: 64
+  readonly property int buttonWidth: 256
+  readonly property int buttonHeight: 64
 
-  width: 256
-  height: 64
+  width: buttonWidth
+  height: buttonHeight
+
+  minimumWidth: buttonWidth
+  minimumHeight: buttonHeight
+
+  maximumWidth: buttonWidth
+  maximumHeight: buttonHeight
+
   title: "Dragster"
 
   visible: true
@@ -23,17 +32,36 @@ ApplicationWindow {
   }
 
   Button {
-    id: dragAction
+    id: button
 
-    width: parent.width
-    height: parent.height
+    implicitWidth: root.buttonWidth
+    implicitHeight: root.buttonHeight
+
     anchors.centerIn: parent
 
-    text: mime.file_name
+    text: backend.mime.file_name
 
-    icon.name: mime.icon_name
+    icon.name: backend.mime.icon_name
     icon.height: 48
     icon.width: 48
+
+    Drag.dragType: Drag.Automatic
+    Drag.supportedActions: Qt.CopyAction
+    Drag.mimeData: { "text/uri-list": backend.mime.uri }
+
+    DragHandler {
+      id: dragHandler
+      onActiveChanged: {
+        if (active) {
+          button.grabToImage(function(result) {
+            button.Drag.imageSource = result.url
+            button.Drag.active = true
+          })
+        } else {
+          button.Drag.active = false
+        }
+      }
+    }
   }
 }
 

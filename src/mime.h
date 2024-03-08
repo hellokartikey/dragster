@@ -1,41 +1,46 @@
 #ifndef DRAGSTER_MIME_H
 #define DRAGSTER_MIME_H
 
-#include <QFile>
-#include <QFileInfo>
-#include <QMimeDatabase>
+#include <QMimeType>
 #include <QObject>
 
 #include <filesystem>
-#include <string>
 
 namespace fs = std::filesystem;
 
-class MimeTypeObject : public QObject {
+class MimeType : public QObject {
   Q_OBJECT;
 
-  Q_PROPERTY(QString  icon_name
-             READ     getIconName
-             NOTIFY   signalIconName);
+  Q_PROPERTY(QString icon_name
+             READ    iconName
+             CONSTANT);
 
-  Q_PROPERTY(QString  file_name
-             READ     getFileName
-             NOTIFY   signalFileName);
+  Q_PROPERTY(QString file_name
+             READ    fileName
+             CONSTANT);
+
+  Q_PROPERTY(QString name
+             READ    mimeName
+             CONSTANT);
+
+  Q_PROPERTY(QString uri
+             READ    fileUri
+             CONSTANT);
 
 public:
-    MimeTypeObject(QObject* parent = nullptr, const fs::path& name = {});
-    ~MimeTypeObject() = default;
+    MimeType(QObject* parent=nullptr);
+    ~MimeType() = default;
 
-    QString getIconName() const;
-    QString getFileName() const;
+    void setPath(const fs::path& name);
 
-signals:
-    void    signalIconName();
-    void    signalFileName();
+    QString iconName() const;
+    QString fileName() const;
+    QString mimeName() const;
+    QString fileUri() const;
 
 private:
-    fs::path  path;
-    QMimeType mime_type;
+    fs::path   path;
+    QMimeType  mime_type;
 };
 
 #endif
