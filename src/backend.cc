@@ -3,15 +3,31 @@
 #include <fmt/core.h>
 #include <fmt/std.h>
 
+#include <QTimer>
+#include <chrono>
+
 #include "mime.h"
 
-Backend::Backend(int argc, char* argv[], QObject* parent) : QObject(parent) {
+Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent) {
+  using namespace std::literals::chrono_literals;
+
+  auto argv = app.arguments();
+  auto argc = argv.size();
+
+  auto name = argv[0].toStdString();
+
+  if (argc < 2) {
+    fmt::print(stderr, "Usage:\n\t{} [FILE...]\n", name);
+    QTimer::singleShot(0ms, [&]() { app.exit(1); });
+    return;
+  }
+
   for (std::size_t idx = 1; idx < argc; idx++) {
-    auto file_path = fs::path{argv[idx]};
+    auto file_path = fs::path{argv[idx].toStdString()};
 
     if (not fs::exists(file_path)) {
       fmt::print(stderr, "{}: file does not exists or is inaccessible: {}\n",
-                 argv[0], file_path);
+                 name, file_path);
       continue;
     }
 
@@ -19,8 +35,8 @@ Backend::Backend(int argc, char* argv[], QObject* parent) : QObject(parent) {
   }
 }
 
-auto Backend::inst(int argc, char* argv[]) -> Backend* {
-  static Backend backend(argc, argv);
+auto Backend::inst(const QCoreApplication& app) -> Backend* {
+  static Backend backend(app);
 
   return &backend;
 }
