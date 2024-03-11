@@ -1,3 +1,7 @@
+ecm_setup_version(${PROJECT_VERSION}
+  VARIABLE_PREFIX DRAGSTER
+  VERSION_HEADER version.h)
+
 add_executable(
   ${PROJECT_NAME}
   main.cc
@@ -14,3 +18,4 @@ target_link_libraries(
   Qt6::Quick
   Qt6::QuickControls2)
 
+install(TARGETS ${PROJECT_NAME} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

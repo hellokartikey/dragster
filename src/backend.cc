@@ -7,6 +7,7 @@
 #include <chrono>
 
 #include "mime.h"
+#include "version.h"
 
 Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent) {
   using namespace std::literals::chrono_literals;
@@ -16,10 +17,10 @@ Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent)
 
   auto name = argv[0].toStdString();
 
-  for (std::size_t idx = 1; idx < argc; idx++) {
+  for (qsizetype idx = 1; idx < argc; idx++) {
     auto file_path = fs::path{argv[idx].toStdString()};
 
-    if (not fs::exists(file_path)) {
+    if (! fs::exists(file_path)) {
       fmt::print(stderr, "{}: file does not exists or is inaccessible: {}\n",
                  name, file_path);
       continue;
@@ -29,6 +30,7 @@ Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent)
   }
 
   if (m_model.size() < 1) {
+    fmt::print(stderr, "version: {}\n", DRAGSTER_VERSION_STRING);
     fmt::print(stderr, "Usage:\n\t{} [FILE...]\n", name);
     QTimer::singleShot(0ms, [&]() { app.exit(1); });
     return;

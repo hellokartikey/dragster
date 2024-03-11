@@ -6,13 +6,15 @@
 #include "backend.h"
 
 int main(int argc, char* argv[]) {
-  auto app = QGuiApplication{argc, argv};
+  using namespace Qt::Literals::StringLiterals;
+
+  auto app = QApplication{argc, argv};
   auto engine = QQmlApplicationEngine{};
 
-  engine.rootContext()->setContextProperty("backend", Backend::inst(app));
+  engine.rootContext()->setContextProperty(u"backend"_s, Backend::inst(app));
 
-  const auto qml_main = QUrl(QStringLiteral("qrc:/main.qml"));
-  engine.load(qml_main);
+  const auto main_qml = QUrl(u"qrc:/main.qml"_s);
+  engine.load(main_qml);
 
   if (engine.rootObjects().isEmpty()) {
     return -1;
