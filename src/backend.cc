@@ -16,12 +16,6 @@ Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent)
 
   auto name = argv[0].toStdString();
 
-  if (argc < 2) {
-    fmt::print(stderr, "Usage:\n\t{} [FILE...]\n", name);
-    QTimer::singleShot(0ms, [&]() { app.exit(1); });
-    return;
-  }
-
   for (std::size_t idx = 1; idx < argc; idx++) {
     auto file_path = fs::path{argv[idx].toStdString()};
 
@@ -32,6 +26,12 @@ Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent)
     }
 
     m_model.append(new Mime(file_path, qobject_cast<QObject*>(this)));
+  }
+
+  if (m_model.size() < 1) {
+    fmt::print(stderr, "Usage:\n\t{} [FILE...]\n", name);
+    QTimer::singleShot(0ms, [&]() { app.exit(1); });
+    return;
   }
 }
 

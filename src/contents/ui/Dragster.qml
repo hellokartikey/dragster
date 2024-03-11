@@ -21,7 +21,7 @@ ApplicationWindow {
   visible: true
 
   Shortcut {
-    sequences: [ StandardKey.Quit ]
+    sequences: [ StandardKey.Quit, StandardKey.Cancel ]
     onActivated: Qt.quit()
   }
 }
