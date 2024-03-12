@@ -20,7 +20,7 @@ find_package(Qt6 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
   QuickControls2
   Widgets)
 
-include(FetchFmt)
+find_package(fmt REQUIRED)
 
 add_subdirectory(src)
 

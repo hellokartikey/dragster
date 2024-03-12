@@ -1,0 +1,20 @@
+id: io.github.hellokartikey.Dragster
+runtime: org.kde.Platform
+runtime-version: '6.6'
+sdk: org.kde.Sdk
+command: dragster
+
+modules:
+  - name: libfmt
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/fmtlib/fmt.git
+        tag: 10.2.1
+  - name: dragster
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/hellokartikey/dragster.git
+        branch: main
+

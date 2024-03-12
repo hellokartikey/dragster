@@ -9,7 +9,7 @@
 #include "mime.h"
 #include "version.h"
 
-Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent) {
+Backend::Backend(const QApplication& app, QObject* parent) : QObject(parent) {
   using namespace std::literals::chrono_literals;
 
   auto argv = app.arguments();
@@ -20,7 +20,7 @@ Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent)
   for (qsizetype idx = 1; idx < argc; idx++) {
     auto file_path = fs::path{argv[idx].toStdString()};
 
-    if (! fs::exists(file_path)) {
+    if (!fs::exists(file_path)) {
       fmt::print(stderr, "{}: file does not exists or is inaccessible: {}\n",
                  name, file_path);
       continue;
@@ -37,7 +37,7 @@ Backend::Backend(const QCoreApplication& app, QObject* parent) : QObject(parent)
   }
 }
 
-auto Backend::inst(const QCoreApplication& app) -> Backend* {
+auto Backend::inst(const QApplication& app) -> Backend* {
   static Backend backend(app);
 
   return &backend;

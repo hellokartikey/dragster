@@ -1,9 +1,8 @@
 #ifndef DRAGSTER_BACKEND_H
 #define DRAGSTER_BACKEND_H
 
-#include <QCoreApplication>
+#include <QApplication>
 #include <QObject>
-#include <QVariant>
 
 #include "mime.h"
 
@@ -15,9 +14,9 @@ class Backend : public QObject {
   Q_PROPERTY(qsizetype size READ size CONSTANT);
 
  public:
-  explicit Backend(const QCoreApplication& app, QObject* parent = nullptr);
+  explicit Backend(const QApplication& app, QObject* parent = nullptr);
 
-  static auto inst(const QCoreApplication& app) -> Backend*;
+  static auto inst(const QApplication& app) -> Backend*;
 
   auto mimeModel() -> MimeList;
 

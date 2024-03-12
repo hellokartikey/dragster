@@ -1,7 +1,8 @@
 #include <QApplication>
-#include <QQuickStyle>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QString>
 #include <QUrl>
-#include <QtQml>
 
 #include "backend.h"
 
