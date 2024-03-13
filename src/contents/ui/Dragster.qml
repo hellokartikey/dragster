@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 ApplicationWindow {
-  readonly property int buttonWidth: 256
+  readonly property int buttonWidth: 192
   readonly property int buttonHeight: 48
 
   title: "Dragster"

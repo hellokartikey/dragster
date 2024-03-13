@@ -3,19 +3,14 @@ import QtQuick
 Dragster {
   id: root
 
-  minimumWidth: content.implicitWidth
-  minimumHeight: content.implicitHeight
+  minimumWidth: Math.max(content.width, root.buttonWidth)
+  minimumHeight: content.height
 
   maximumWidth: minimumWidth
   maximumHeight: minimumHeight
 
   Column {
     id: content
-
-    anchors.fill: parent
-
-    width: repeater.implicitWidth
-    height: repeater.implicitHeight
 
     spacing: 1
 
@@ -29,7 +24,7 @@ Dragster {
 
         required property var model
 
-        width: Math.max(element.implicitWidth, parent.width)
+        width: Math.max(element.implicitWidth, root.width)
         height: root.buttonHeight
 
         DragElement {
