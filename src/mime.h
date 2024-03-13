@@ -9,12 +9,12 @@
 namespace fs = std::filesystem;
 
 class Mime : public QObject {
-  Q_OBJECT;
+  Q_OBJECT
 
-  Q_PROPERTY(QString iconName READ iconName CONSTANT);
-  Q_PROPERTY(QString fileName READ fileName CONSTANT);
-  Q_PROPERTY(QString mimeName READ mimeName CONSTANT);
-  Q_PROPERTY(QString fileUri READ fileUri CONSTANT);
+  Q_PROPERTY(QString iconName READ iconName CONSTANT)
+  Q_PROPERTY(QString fileName READ fileName CONSTANT)
+  Q_PROPERTY(QString mimeName READ mimeName CONSTANT)
+  Q_PROPERTY(QString fileUri READ fileUri CONSTANT)
 
  public:
   explicit Mime(const fs::path& name, QObject* parent = nullptr);

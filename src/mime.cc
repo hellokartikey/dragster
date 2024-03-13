@@ -1,6 +1,7 @@
 #include "mime.h"
 
 #include <QFile>
+#include <QIcon>
 #include <QMimeDatabase>
 #include <QUrl>
 #include <filesystem>
@@ -21,7 +22,12 @@ auto Mime::fileName() const -> QString {
   return QString::fromStdString(path.filename().native());
 }
 
-auto Mime::iconName() const -> QString { return mime_type.iconName(); }
+auto Mime::iconName() const -> QString {
+  using namespace Qt::Literals::StringLiterals;
+
+  auto fallback = QIcon::fromTheme(u"unknown"_s);
+  return QIcon::fromTheme(mime_type.iconName(), fallback).name();
+}
 
 auto Mime::mimeName() const -> QString { return mime_type.name(); }
 

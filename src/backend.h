@@ -8,10 +8,10 @@
 
 class Backend : public QObject {
  private:
-  Q_OBJECT;
+  Q_OBJECT
 
   Q_PROPERTY(MimeList mimeModel READ mimeModel CONSTANT)
-  Q_PROPERTY(qsizetype size READ size CONSTANT);
+  Q_PROPERTY(qsizetype size READ size CONSTANT)
 
  public:
   explicit Backend(const QApplication& app, QObject* parent = nullptr);

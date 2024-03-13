@@ -2,19 +2,8 @@ import QtQuick
 import QtQuick.Controls
 
 ApplicationWindow {
-  SystemPalette {
-    id: myPalette
-    colorGroup: SystemPalette.Active
-  }
-
   readonly property int buttonWidth: 256
-  readonly property int buttonHeight: 64
-
-  minimumWidth: buttonWidth
-  minimumHeight: buttonHeight * backend.size
-
-  maximumWidth: minimumWidth
-  maximumHeight: minimumHeight
+  readonly property int buttonHeight: 48
 
   title: "Dragster"
 

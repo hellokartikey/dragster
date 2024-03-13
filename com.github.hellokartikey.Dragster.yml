@@ -1,4 +1,4 @@
-id: io.github.hellokartikey.Dragster
+id: com.github.hellokartikey.Dragster
 
 runtime: org.kde.Platform
 runtime-version: '6.6'
