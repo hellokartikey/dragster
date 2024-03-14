@@ -1,30 +1,40 @@
 import QtQuick
+import QtQuick.Controls
 
 Dragster {
   id: root
 
-  minimumWidth: Math.max(content.width, root.buttonWidth)
-  minimumHeight: content.height
+  readonly property int buttonWidth: 192
+  readonly property int buttonHeight: 48
+
+  minimumWidth: flick.implicitWidth
 
   maximumWidth: minimumWidth
-  maximumHeight: minimumHeight
+  maximumHeight: buttonHeight * backend.size
 
-  Column {
-    id: content
+  ListView {
+    id: flick
+
+    anchors.fill: parent
+
+    model: backend.mimeModel
+
+    implicitWidth: Math.max(root.buttonWidth, contentItem.childrenRect.width)
+
+    boundsBehavior: Flickable.StopAtBounds
+
+    ScrollBar.vertical: ScrollBar {
+      id: scroll
+
+      interactive: false
+    }
 
     spacing: 1
 
-    Repeater {
-      id: repeater
+    delegate: Item {
+        required property var model;
 
-      model: backend.mimeModel
-
-      Item {
-        id: delegate
-
-        required property var model
-
-        width: Math.max(element.implicitWidth, root.width)
+        width: Math.max(element.implicitWidth, flick.width)
         height: root.buttonHeight
 
         DragElement {
@@ -38,6 +48,5 @@ Dragster {
         }
       }
     }
-  }
 }
 
