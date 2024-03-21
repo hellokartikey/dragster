@@ -27,33 +27,35 @@ ItemDelegate {
     property real radius: 2
 
     Rectangle {
+      // Hover background
       anchors.fill: parent
 
       radius: parent.radius
 
       color: palette.button
-      opacity: 1
 
       border.color: button.hovered ? palette.highlight : palette.mid
       border.width: 1
     }
 
     Rectangle {
+      // Pressed background
       anchors.fill: parent
 
       radius: parent.radius
 
       color: palette.highlight
-      opacity: button.pressed ? 0.5 : 0
+      opacity: button.down ? 0.5 : 0
     }
 
     Rectangle {
+      // Border
       anchors.fill: parent
 
       radius: parent.radius
 
       color: palette.mid
-      opacity: button.pressed ? 0 : button.hovered ? 0.5 : 0
+      opacity: button.down ? 0 : button.hovered ? 0.5 : 0
     }
   }
 
@@ -65,6 +67,7 @@ ItemDelegate {
         button.grabToImage(function(result) {
           button.Drag.imageSource = result.url
           button.Drag.active = true
+          button.down = false
         })
       } else {
         button.Drag.active = false
