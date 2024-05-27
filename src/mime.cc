@@ -1,7 +1,5 @@
 #include "mime.h"
 
-#include <fmt/core.h>
-
 #include <QFile>
 #include <QIcon>
 #include <QMimeDatabase>

@@ -4,47 +4,47 @@ import QtQuick.Controls
 import Dragster
 
 CheckDelegate {
-    id: button
+  id: button
 
-    required property var model
+  required property var model
 
-    text: model.fileName
+  text: model.fileName
 
-    icon.name: model.iconName
-    icon.height: 32
-    icon.width: 32
+  icon.name: model.iconName
+  icon.height: 32
+  icon.width: 32
 
-    Drag.dragType: Drag.Automatic
-    Drag.supportedActions: Qt.CopyAction
-    Drag.mimeData: {
-        "text/uri-list": Backend.isMultipleSelected ? Backend.multiMimeData : model.fileUri
+  Drag.dragType: Drag.Automatic
+  Drag.supportedActions: Qt.CopyAction
+  Drag.mimeData: {
+    "text/uri-list": Backend.isMultipleSelected && model.isChecked ? Backend.multiMimeData : model.fileUri
+  }
+
+  checked: model.isChecked
+
+  nextCheckState: function () {
+    if (checkState === Qt.Checked) {
+      model.isChecked = false;
+      return Qt.Unchecked;
+    } else {
+      model.isChecked = true;
+      return Qt.Checked;
     }
+  }
 
-    checked: model.isChecked
+  DragHandler {
+    id: dragHandler
 
-    nextCheckState: function () {
-        if (checkState === Qt.Checked) {
-            model.isChecked = false;
-            return Qt.Unchecked;
-        } else {
-            model.isChecked = true;
-            return Qt.Checked;
-        }
+    onActiveChanged: {
+      if (active) {
+        button.grabToImage(function (result) {
+          button.Drag.imageSource = result.url;
+          button.Drag.active = true;
+          button.down = false;
+        });
+      } else {
+        button.Drag.active = false;
+      }
     }
-
-    DragHandler {
-        id: dragHandler
-
-        onActiveChanged: {
-            if (active) {
-                button.grabToImage(function (result) {
-                    button.Drag.imageSource = result.url;
-                    button.Drag.active = true;
-                    button.down = false;
-                });
-            } else {
-                button.Drag.active = false;
-            }
-        }
-    }
+  }
 }

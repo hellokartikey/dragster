@@ -4,14 +4,14 @@ import QtQuick.Controls
 import Dragster
 
 ApplicationWindow {
-    id: root
+  id: root
 
-    title: "Dragster - " + Backend.size
+  title: "Dragster - " + Backend.size
 
-    visible: true
+  visible: true
 
-    Shortcut {
-        sequences: [StandardKey.Quit, StandardKey.Cancel]
-        onActivated: Qt.quit()
-    }
+  Shortcut {
+    sequences: [StandardKey.Quit, StandardKey.Cancel]
+    onActivated: Qt.quit()
+  }
 }
