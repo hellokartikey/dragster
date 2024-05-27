@@ -1,5 +1,7 @@
 #include "mime.h"
 
+#include <fmt/core.h>
+
 #include <QFile>
 #include <QIcon>
 #include <QMimeDatabase>
@@ -8,7 +10,8 @@
 
 QMimeDatabase mime_db;
 
-Mime::Mime(const fs::path& name, QObject* parent) : QObject(parent) {
+Mime::Mime(const fs::path& name, QObject* parent)
+    : QObject(parent), checked(false) {
   setPath(name);
 }
 
@@ -34,6 +37,14 @@ auto Mime::mimeName() const -> QString { return mime_type.name(); }
 auto Mime::fileUri() const -> QString {
   auto url = QUrl::fromLocalFile(QString::fromStdString(path.native()));
   return url.toDisplayString();
+}
+
+auto Mime::isChecked() const -> bool { return checked; }
+
+auto Mime::setChecked(bool checked) -> void {
+  if (this->checked == checked) return;
+  this->checked = checked;
+  Q_EMIT sigChecked();
 }
 
 #include "moc_mime.cpp"

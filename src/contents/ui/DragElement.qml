@@ -1,78 +1,50 @@
 import QtQuick
 import QtQuick.Controls
 
-ItemDelegate {
-  id: button
+import Dragster
 
-  required property string fileName
-  required property string iconName
-  required property string fileUri
+CheckBox {
+    id: button
 
-  text: fileName
+    required property var model
 
-  icon.name: iconName
-  icon.height: 32
-  icon.width: 32
+    text: model.fileName
 
-  Drag.dragType: Drag.Automatic
-  Drag.supportedActions: Qt.CopyAction
-  Drag.mimeData: { "text/uri-list": fileUri }
+    icon.name: model.iconName
+    icon.height: 32
+    icon.width: 32
 
-  background: Item {
-    SystemPalette {
-      id: palette
-      colorGroup: SystemPalette.Active
+    Drag.dragType: Drag.Automatic
+    Drag.supportedActions: Qt.CopyAction
+    Drag.mimeData: {
+        "text/uri-list": Backend.isMultipleSelected ? Backend.multiMimeData : model.fileUri
     }
 
-    property real radius: 2
+    checked: model.isChecked
 
-    Rectangle {
-      // Hover background
-      anchors.fill: parent
-
-      radius: parent.radius
-
-      color: palette.button
-
-      border.color: button.hovered ? palette.highlight : palette.mid
-      border.width: 1
+    nextCheckState: function () {
+        if (checkState === Qt.Checked) {
+            model.isChecked = false;
+            return Qt.Unchecked;
+        } else {
+            model.isChecked = true;
+            return Qt.Checked;
+        }
     }
 
-    Rectangle {
-      // Pressed background
-      anchors.fill: parent
+    DragHandler {
+        id: dragHandler
 
-      radius: parent.radius
-
-      color: palette.highlight
-      opacity: button.down ? 0.5 : 0
+        onActiveChanged: {
+            if (active) {
+                button.grabToImage(function (result) {
+                    button.Drag.imageSource = result.url;
+                    button.Drag.active = true;
+                    button.down = false;
+                });
+            } else {
+                button.Drag.active = false;
+            }
+        }
     }
-
-    Rectangle {
-      // Border
-      anchors.fill: parent
-
-      radius: parent.radius
-
-      color: palette.mid
-      opacity: button.down ? 0 : button.hovered ? 0.5 : 0
-    }
-  }
-
-  DragHandler {
-    id: dragHandler
-
-    onActiveChanged: {
-      if (active) {
-        button.grabToImage(function(result) {
-          button.Drag.imageSource = result.url
-          button.Drag.active = true
-          button.down = false
-        })
-      } else {
-        button.Drag.active = false
-      }
-    }
-  }
 }
-

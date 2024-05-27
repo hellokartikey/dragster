@@ -2,15 +2,14 @@ import QtQuick
 import QtQuick.Controls
 
 ApplicationWindow {
-  id: root
+    id: root
 
-  title: "Dragster"
+    title: "Dragster"
 
-  visible: true
+    visible: true
 
-  Shortcut {
-    sequences: [ StandardKey.Quit, StandardKey.Cancel ]
-    onActivated: Qt.quit()
-  }
+    Shortcut {
+        sequences: [StandardKey.Quit, StandardKey.Cancel]
+        onActivated: Qt.quit()
+    }
 }
-

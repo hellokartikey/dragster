@@ -26,7 +26,12 @@ Backend::Backend(const QApplication& app, QObject* parent) : QObject(parent) {
       continue;
     }
 
-    m_model.append(new Mime(file_path, qobject_cast<QObject*>(this)));
+    auto* tmp_mime = new Mime(file_path, qobject_cast<QObject*>(this));
+
+    m_model.append(tmp_mime);
+
+    QObject::connect(tmp_mime, &Mime::sigChecked, this,
+                     &Backend::setMultipleSelected);
   }
 
   if (m_model.size() < 1) {
@@ -46,5 +51,29 @@ auto Backend::inst(const QApplication& app) -> Backend* {
 auto Backend::mimeModel() -> MimeList { return m_model; }
 
 auto Backend::size() const -> qsizetype { return m_model.size(); }
+
+auto Backend::isMultipleSelected() const -> bool {
+  for (const auto* mime : m_model) {
+    if (mime->isChecked()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+auto Backend::multiMimeData() const -> QStringList {
+  auto returnList = QStringList{};
+
+  for (const auto* mime : m_model) {
+    if (mime->isChecked()) {
+      returnList << mime->fileUri();
+    }
+  }
+
+  return returnList;
+}
+
+auto Backend::setMultipleSelected() -> void { Q_EMIT sigMultipleSelected(); }
 
 #include "moc_backend.cpp"

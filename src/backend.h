@@ -12,6 +12,10 @@ class Backend : public QObject {
 
   Q_PROPERTY(MimeList mimeModel READ mimeModel CONSTANT)
   Q_PROPERTY(qsizetype size READ size CONSTANT)
+  Q_PROPERTY(bool isMultipleSelected READ isMultipleSelected NOTIFY
+                 sigMultipleSelected)
+  Q_PROPERTY(
+      QStringList multiMimeData READ multiMimeData NOTIFY sigMultiMimeData)
 
  public:
   explicit Backend(const QApplication& app, QObject* parent = nullptr);
@@ -21,6 +25,15 @@ class Backend : public QObject {
   auto mimeModel() -> MimeList;
 
   auto size() const -> qsizetype;
+
+  auto isMultipleSelected() const -> bool;
+  auto setMultipleSelected() -> void;
+
+  auto multiMimeData() const -> QStringList;
+
+ Q_SIGNALS:
+  void sigMultipleSelected();
+  void sigMultiMimeData();
 
  private:
   MimeList m_model;

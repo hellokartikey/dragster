@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
   auto app = QApplication{argc, argv};
   auto engine = QQmlApplicationEngine{};
 
-  engine.rootContext()->setContextProperty(u"backend"_s, Backend::inst(app));
+  qmlRegisterSingletonInstance("Dragster", 1, 0, "Backend", Backend::inst(app));
 
   const auto main_qml = QUrl(u"qrc:/main.qml"_s);
   engine.load(main_qml);

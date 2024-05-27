@@ -15,6 +15,7 @@ class Mime : public QObject {
   Q_PROPERTY(QString fileName READ fileName CONSTANT)
   Q_PROPERTY(QString mimeName READ mimeName CONSTANT)
   Q_PROPERTY(QString fileUri READ fileUri CONSTANT)
+  Q_PROPERTY(bool isChecked READ isChecked WRITE setChecked NOTIFY sigChecked)
 
  public:
   explicit Mime(const fs::path& name, QObject* parent = nullptr);
@@ -26,10 +27,17 @@ class Mime : public QObject {
   auto fileName() const -> QString;
   auto mimeName() const -> QString;
   auto fileUri() const -> QString;
+  auto isChecked() const -> bool;
+
+  auto setChecked(bool checked = true) -> void;
+
+ Q_SIGNALS:
+  void sigChecked();
 
  private:
   fs::path path;
   QMimeType mime_type;
+  bool checked;
 };
 
 using MimeList = QList<Mime*>;
