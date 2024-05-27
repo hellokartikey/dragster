@@ -6,13 +6,14 @@ import Dragster
 Dragster {
     id: root
 
-    readonly property int buttonWidth: 192
+    readonly property int buttonWidth: 256
     readonly property int buttonHeight: 48
 
     maximumWidth: Math.max(flick.implicitWidth, buttonWidth)
-    maximumHeight: buttonHeight * Backend.size
+    maximumHeight: Math.min(buttonHeight * Backend.size, buttonHeight * 10)
 
-    minimumWidth: maximumWidth
+    minimumWidth: buttonWidth
+    minimumHeight: buttonHeight
 
     height: maximumHeight
 
@@ -42,6 +43,15 @@ Dragster {
                 anchors.fill: parent
 
                 model: itemDelegate.model
+            }
+
+            Rectangle {
+                id: seperator
+
+                width: parent.width;
+                height: 1;
+                visible: (flick.index !== (flick.count - 1))
+                color: palette.mid
             }
         }
     }

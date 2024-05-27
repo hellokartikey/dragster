@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 import Dragster
 
-CheckBox {
+CheckDelegate {
     id: button
 
     required property var model

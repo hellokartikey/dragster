@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 
+import Dragster
+
 ApplicationWindow {
     id: root
 
-    title: "Dragster"
+    title: "Dragster - " + Backend.size
 
     visible: true
 
