@@ -1,7 +1,6 @@
 <RCC>
   <qresource prefix="/">
     <file alias="main.qml">contents/ui/main.qml</file>
-    <file alias="Dragster.qml">contents/ui/Dragster.qml</file>
     <file alias="DragElement.qml">contents/ui/DragElement.qml</file>
   </qresource>
 </RCC>
