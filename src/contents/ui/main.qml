@@ -6,63 +6,63 @@ import Dragster
 ApplicationWindow {
   id: root
 
-  readonly property int buttonWidth: 256
-  readonly property int buttonHeight: 48
-
-  maximumWidth: Math.max(flick.width, buttonWidth)
-  maximumHeight: Math.min(buttonHeight * Backend.size, buttonHeight * 10)
-
-  minimumWidth: maximumWidth
-  minimumHeight: buttonHeight
-
-  height: maximumHeight
-  width: maximumWidth
+  property int buttonWidth: 256
+  property int buttonHeight: 48
 
   title: "Dragster - " + Backend.size
 
   visible: true
+
+  maximumWidth: buttonWidth
+  maximumHeight: buttonHeight * Backend.size
+
+  minimumWidth: buttonWidth
+  minimumHeight: Math.min(maximumHeight, buttonHeight * 10)
 
   Shortcut {
     sequences: [StandardKey.Quit, StandardKey.Cancel]
     onActivated: Qt.quit()
   }
 
-  ListView {
-    id: flick
+  ScrollView {
+    anchors.fill: parent
 
-    width: contentItem.childrenRect.width
-    height: Math.min(root.height, contentItem.childrenRect.height)
+    ScrollBar.vertical.interactive: false
 
-    model: Backend.mimeModel
+    Column {
+      Repeater {
+        id: repeater
 
-    ScrollBar.vertical: ScrollBar {
-      id: scroll
+        model: Backend.mimeModel
 
-      interactive: false
-    }
+        delegate: Item {
+          id: itemDelegate
 
-    delegate: Item {
-      id: itemDelegate
-      required property var model
+          required property var model
 
-      width: Math.max(element.implicitWidth, buttonWidth)
-      height: root.buttonHeight
+          width: buttonWidth
+          height: buttonHeight
 
-      DragElement {
-        id: element
+          Component.onCompleted: {
+            buttonWidth = Math.max(buttonWidth, element.implicitWidth)
+          }
 
-        anchors.fill: parent
+          DragElement {
+            id: element
 
-        model: itemDelegate.model
-      }
+            anchors.fill: parent
+            model: itemDelegate.model
+          }
 
-      Rectangle {
-        id: seperator
+          Rectangle {
+            id: seperator
 
-        width: parent.width
-        height: 1
-        visible: (flick.index !== (flick.count - 1))
-        color: palette.mid
+            width: parent.width
+            height: 1
+            visible: repeater.index !== (repeater.count - 1)
+            color: palette.mid
+          }
+        }
       }
     }
   }
