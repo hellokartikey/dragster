@@ -13,10 +13,10 @@ ApplicationWindow {
 
   visible: true
 
-  maximumWidth: buttonWidth
+  maximumWidth: buttonWidth + scroll.effectiveScrollBarWidth
   maximumHeight: buttonHeight * Backend.size
 
-  minimumWidth: buttonWidth
+  minimumWidth: maximumWidth
   minimumHeight: Math.min(maximumHeight, buttonHeight * 10)
 
   Shortcut {
@@ -25,9 +25,9 @@ ApplicationWindow {
   }
 
   ScrollView {
-    anchors.fill: parent
+    id: scroll
 
-    ScrollBar.vertical.interactive: false
+    anchors.fill: parent
 
     Column {
       Repeater {
