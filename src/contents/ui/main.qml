@@ -40,11 +40,11 @@ ApplicationWindow {
 
           required property var model
 
-          width: buttonWidth
-          height: buttonHeight
+          width: root.buttonWidth
+          height: root.buttonHeight
 
           Component.onCompleted: {
-            buttonWidth = Math.max(buttonWidth, element.implicitWidth)
+            root.buttonWidth = Math.max(root.buttonWidth, element.implicitWidth)
           }
 
           DragElement {
