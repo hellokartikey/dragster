@@ -1,4 +1,5 @@
 # Dragster
 
-A simple utility to drag and drop files!
+Drag and drop files in style!
 
+![Main Window](screenshots/readme.png)
